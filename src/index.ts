@@ -3,7 +3,10 @@ import { setupProject } from "./commands/setUpProject";
 
 const program = new Command();
 
-program.name("my-cli").version("1.0.0").description("My CLI tool");
+program
+  .name("create-express-app")
+  .version("1.0.0")
+  .description("A build tool like create react app but for express");
 
 // Add the setup-auth command to the CLI
 program.addCommand(setupProject);

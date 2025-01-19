@@ -1,17 +1,30 @@
 {
-  "name": "create-express-app",
+  "name": "@pratiyank/create-express-app",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "bin": {
+    "create-express-app": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc -b && npm run copy-templates",
-    "copy-templates": "copyfiles -u 1 -a src/templates/**/* dist"
+    "copy-templates": "copyfiles -u 1 -a src/templates/**/* dist",
+    "prepublishOnly": "npm run build"
   },
-  "keywords": [],
+  "keywords": [
+    "express",
+    "typescript",
+    "boilerplate",
+    "generator",
+    "cli"
+  ],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
-  "description": "",
+  "description": "A build tool similar to create-react-app but for express",
   "dependencies": {
     "@types/fs-extra": "^11.0.4",
     "chalk": "^5.4.1",
