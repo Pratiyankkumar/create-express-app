@@ -5,7 +5,7 @@ import {
   createPackageFile,
   createTsFile,
 } from "../utils/generateFileFromTemplate";
-import { createProjectFolder } from "../utils/fileUtils";
+import { createProjectFolder } from "../utils/folderUtils";
 
 export const setupLang = new Command("setup-language") // Define a new command
   .description("Set up Language for your project") // Add a description

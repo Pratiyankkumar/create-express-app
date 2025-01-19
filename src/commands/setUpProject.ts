@@ -3,7 +3,7 @@ import askProjectName from "../prompts/createProject";
 import { setupAuth } from "./setUpAuth";
 import { setupLang } from "./setUpLanguage";
 import { setupDB } from "./setupDB";
-import { createFolder } from "../utils/fileUtils";
+import { createFolder } from "../utils/folderUtils";
 
 export let projectName: string;
 
