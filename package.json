@@ -1,0 +1,26 @@
+{
+  "name": "create-express-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc -b && npm run copy-templates",
+    "copy-templates": "copyfiles -u 1 src/templates/**/* dist"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "description": "",
+  "dependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "chalk": "^5.4.1",
+    "commander": "^13.0.0",
+    "fs-extra": "^11.3.0",
+    "inquirer": "^12.3.0"
+  },
+  "devDependencies": {
+    "@types/chalk": "^0.4.31",
+    "copyfiles": "^2.4.1"
+  }
+}
