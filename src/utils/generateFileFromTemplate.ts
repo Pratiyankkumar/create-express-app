@@ -81,3 +81,44 @@ export async function createTsFile(projectName: string) {
   // No replacements needed for tsconfig
   await generateFromTemplate(templatePath, projectDir);
 }
+
+export async function createIndexTsFile(projectName: string) {
+  const templatePath = path.join(__dirname, "../templates/index.ts.template");
+  const projectDir = path.join(process.cwd(), `/${projectName}/src`);
+
+  const replacements = {
+    projectName,
+  };
+
+  // No replacements needed for tsconfig
+  await generateFromTemplate(templatePath, projectDir, replacements);
+}
+
+export async function createPrismaSchema(projectName: string) {
+  const templatePath = path.join(
+    __dirname,
+    "../templates/schema.prisma.template"
+  );
+
+  const projectDir = path.join(process.cwd(), `/${projectName}/prisma`);
+
+  await generateFromTemplate(templatePath, projectDir);
+}
+
+export async function CreateEnvPrisma(projectName: string) {
+  const templatePath = path.join(__dirname, "../templates/.env.template");
+
+  const projectDir = path.join(process.cwd(), projectName);
+
+  await generateFromTemplate(templatePath, projectDir);
+}
+
+export async function CreateMongooseTs(projectName: string) {
+  const templatePath = path.join(
+    __dirname,
+    "../templates/mongoose.ts.template"
+  );
+  const projectDir = path.join(process.cwd(), `${projectName}/src/db`);
+
+  await generateFromTemplate(templatePath, projectDir);
+}

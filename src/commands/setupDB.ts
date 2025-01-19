@@ -1,5 +1,14 @@
 import { Command } from "commander";
 import askDB from "../prompts/chooseDB";
+import { createProjectFolder } from "../utils/folderUtils";
+import { projectName } from "./setUpProject";
+import {
+  CreateEnvPrisma,
+  CreateMongooseTs,
+  createPrismaSchema,
+} from "../utils/generateFileFromTemplate";
+import updatePackageWithDatabase from "../utils/changePackagejson";
+import path from "path";
 
 export const setupDB = new Command("setup-db") // Define a new command
   .description("Set up Database for your project") // Add a description
@@ -14,9 +23,21 @@ export const setupDB = new Command("setup-db") // Define a new command
 
     switch (DB) {
       case "PostgreSQL":
-        return console.log("You chose PostgreSQL as a database");
+        createProjectFolder(projectName, "prisma");
+        createPrismaSchema(projectName);
+        CreateEnvPrisma(projectName);
+        updatePackageWithDatabase(
+          path.join(process.cwd(), projectName),
+          "postgresql"
+        );
+        return;
       case "MongoDB":
-        return console.log("You chose MongoDB as a database");
+        createProjectFolder(projectName, "src/db");
+        updatePackageWithDatabase(
+          path.join(process.cwd(), projectName),
+          "mongodb"
+        );
+        CreateMongooseTs(projectName);
       default:
         return console.log("Unknown Case");
     }

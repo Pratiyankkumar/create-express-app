@@ -2,6 +2,7 @@ import { Command } from "commander";
 import { projectName } from "./setUpProject";
 import askLanguage from "../prompts/chooseLanguage";
 import {
+  createIndexTsFile,
   createPackageFile,
   createTsFile,
 } from "../utils/generateFileFromTemplate";
@@ -25,6 +26,9 @@ export const setupLang = new Command("setup-language") // Define a new command
         createPackageFile(projectName);
         createTsFile(projectName);
         createProjectFolder(projectName, "src");
+        createIndexTsFile(projectName);
+        createProjectFolder(projectName, "src/middleware");
+        createProjectFolder(projectName, "src/routes");
         return;
       default:
         return console.log("Unknown Case");
