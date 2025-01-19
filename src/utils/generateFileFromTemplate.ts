@@ -23,7 +23,10 @@ async function generateFromTemplate(
     const templateContent = await fs.readFile(templatePath, "utf8");
 
     // Get the output filename by removing .template extension
-    const outputFileName = path.basename(templatePath).replace(".template", "");
+    const outputFileName =
+      path.basename(templatePath) === "package.json.ts.template"
+        ? "package.json"
+        : path.basename(templatePath).replace(".template", "");
 
     // Create the output directory if it doesn't exist
     await fs.ensureDir(outputDir);
@@ -60,6 +63,20 @@ async function generateFromTemplate(
 export async function createPackageFile(projectName: string) {
   const templatePath = path.join(
     __dirname,
+    "../templates/package.json.ts.template"
+  );
+  const projectDir = path.join(process.cwd(), projectName);
+  const replacements = {
+    projectName: projectName,
+    version: "1.0.0",
+  };
+
+  await generateFromTemplate(templatePath, projectDir, replacements);
+}
+
+export async function createPackageFileJs(projectName: string) {
+  const templatePath = path.join(
+    __dirname,
     "../templates/package.json.template"
   );
   const projectDir = path.join(process.cwd(), projectName);
@@ -94,6 +111,18 @@ export async function createIndexTsFile(projectName: string) {
   await generateFromTemplate(templatePath, projectDir, replacements);
 }
 
+export async function createIndexJsFile(projectName: string) {
+  const templatePath = path.join(__dirname, "../templates/index.js.template");
+  const projectDir = path.join(process.cwd(), `/${projectName}/src`);
+
+  const replacements = {
+    projectName,
+  };
+
+  // No replacements needed for tsconfig
+  await generateFromTemplate(templatePath, projectDir, replacements);
+}
+
 export async function createPrismaSchema(projectName: string) {
   const templatePath = path.join(
     __dirname,
@@ -117,6 +146,16 @@ export async function CreateMongooseTs(projectName: string) {
   const templatePath = path.join(
     __dirname,
     "../templates/mongoose.ts.template"
+  );
+  const projectDir = path.join(process.cwd(), `${projectName}/src/db`);
+
+  await generateFromTemplate(templatePath, projectDir);
+}
+
+export async function CreateMongooseJs(projectName: string) {
+  const templatePath = path.join(
+    __dirname,
+    "../templates/mongoose.js.template"
   );
   const projectDir = path.join(process.cwd(), `${projectName}/src/db`);
 

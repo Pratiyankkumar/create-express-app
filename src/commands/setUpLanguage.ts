@@ -2,11 +2,15 @@ import { Command } from "commander";
 import { projectName } from "./setUpProject";
 import askLanguage from "../prompts/chooseLanguage";
 import {
+  createIndexJsFile,
   createIndexTsFile,
   createPackageFile,
+  createPackageFileJs,
   createTsFile,
 } from "../utils/generateFileFromTemplate";
 import { createProjectFolder } from "../utils/folderUtils";
+
+export let language: string;
 
 export const setupLang = new Command("setup-language") // Define a new command
   .description("Set up Language for your project") // Add a description
@@ -14,14 +18,19 @@ export const setupLang = new Command("setup-language") // Define a new command
     console.log("🔧 Setting up Language for your project\n");
 
     // Use askAuthentication to prompt the user
-    const language = await askLanguage();
+    language = await askLanguage();
 
     // Process the selected authentication method
     console.log(`✅ You selected: ${language}\n`);
 
     switch (language) {
       case "JavaScript":
-        return console.log("You chose Javascript as a language");
+        createPackageFileJs(projectName);
+        createProjectFolder(projectName, "src");
+        createIndexJsFile(projectName);
+        createProjectFolder(projectName, "src/middleware");
+        createProjectFolder(projectName, "src/routes");
+        return;
       case "TypeScript":
         createPackageFile(projectName);
         createTsFile(projectName);

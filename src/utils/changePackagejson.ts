@@ -8,29 +8,6 @@ interface DatabaseDependencies {
   devDependencies: Record<string, string>;
 }
 
-// Define dependencies for each database type
-const databasePackages: Record<DatabaseType, DatabaseDependencies> = {
-  postgresql: {
-    dependencies: {
-      prisma: "^6.1.0",
-      pg: "^8.11.3",
-    },
-    devDependencies: {
-      "@prisma/client": "^6.1.0",
-      "@types/pg": "^8.10.9",
-    },
-  },
-  mongodb: {
-    dependencies: {
-      mongoose: "^8.0.3", // MongoDB ODM
-      mongodb: "^6.3.0",
-    },
-    devDependencies: {
-      "@types/mongodb": "^4.0.7",
-    },
-  },
-};
-
 /**
  * Updates package.json with database-specific dependencies
  * @param {string} projectPath - Path to the project root
@@ -39,7 +16,8 @@ const databasePackages: Record<DatabaseType, DatabaseDependencies> = {
  */
 export default async function updatePackageWithDatabase(
   projectPath: string,
-  database: DatabaseType
+  database: DatabaseType,
+  databasePackages: Record<DatabaseType, DatabaseDependencies>
 ): Promise<void> {
   try {
     const packageJsonPath = path.join(projectPath, "package.json");
