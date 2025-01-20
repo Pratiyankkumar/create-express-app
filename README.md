@@ -22,7 +22,7 @@ npm install -g @pratiyank/create-express-app
 
 Directly copy and paste below command please for now 
 ```bash
-create-express-app project-name
+create-express-app init
 ```
 
 ## Features in Development
@@ -35,6 +35,15 @@ We're actively working on adding these features:
 - Logging system
 - Test setup
 - Health check endpoints
+
+## JWT Based Authentication
+
+| Language + Database | Authentication Status | Implementation Details |
+|--------------------|----------------------|----------------------|
+| TypeScript + MongoDB | ✅ Implemented | JWT-based authentication |
+| TypeScript + PostgreSQL | ❌ Planned | Using Prisma |
+| JavaScript + MongoDB | ❌ Planned | For future implementation |
+| JavaScript + PostgreSQL | ❌ Planned | Using Prisma |
 
 ## Configuration
 
