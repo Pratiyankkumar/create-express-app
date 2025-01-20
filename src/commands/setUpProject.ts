@@ -7,7 +7,7 @@ import { createFolder } from "../utils/folderUtils";
 
 export let projectName: string;
 
-export const setupProject = new Command("project-name") // Define a new command
+export const setupProject = new Command("init") // Define a new command
   .description("Give Project a name") // Add a description
   .action(async () => {
     // Use askAuthentication to prompt the user

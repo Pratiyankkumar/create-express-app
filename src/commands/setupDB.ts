@@ -4,8 +4,19 @@ import { createProjectFolder } from "../utils/folderUtils";
 import { projectName } from "./setUpProject";
 import {
   CreateEnvPrisma,
+  createIndexMongooseJs,
+  createIndexMongooseTs,
+  createIndexPostgresJs,
+  createIndexPostgresTs,
+  CreateMongooseAuthControllerTs,
+  CreateMongooseAuthMiddlewareTs,
+  CreateMongooseAuthRoutesTs,
   CreateMongooseJs,
   CreateMongooseTs,
+  CreateMongooseUserSchemaTs,
+  CreateNodemonJsonTs,
+  createPrismaClientJs,
+  createPrismaClientTs,
   createPrismaSchema,
 } from "../utils/generateFileFromTemplate";
 import updatePackageWithDatabase from "../utils/changePackagejson";
@@ -23,11 +34,11 @@ interface DatabaseDependencies {
 const databasePackagesTs: Record<DatabaseType, DatabaseDependencies> = {
   postgresql: {
     dependencies: {
-      prisma: "^6.1.0",
       pg: "^8.11.3",
+      "@prisma/client": "^6.1.0",
     },
     devDependencies: {
-      "@prisma/client": "^6.1.0",
+      prisma: "^6.1.0",
       "@types/pg": "^8.10.9",
     },
   },
@@ -35,9 +46,13 @@ const databasePackagesTs: Record<DatabaseType, DatabaseDependencies> = {
     dependencies: {
       mongoose: "^8.0.3", // MongoDB ODM
       mongodb: "^6.3.0",
+      bcryptjs: "^2.4.3",
+      jsonwebtoken: "^9.0.0",
+      "@types/bcryptjs": "^2.4.2",
     },
     devDependencies: {
       "@types/mongodb": "^4.0.7",
+      "@types/jsonwebtoken": "^9.0.0",
     },
   },
 };
@@ -62,13 +77,15 @@ const databasePackagesJs: Record<DatabaseType, DatabaseDependencies> = {
   },
 };
 
+export let DB: string;
+
 export const setupDB = new Command("setup-db") // Define a new command
   .description("Set up Database for your project") // Add a description
   .action(async () => {
     console.log("🔧 Setting up Database for your project\n");
 
     // Use askAuthentication to prompt the user
-    const DB = await askDB();
+    DB = await askDB();
 
     // Process the selected authentication method
     console.log(`✅ You selected: ${DB}\n`);
@@ -77,6 +94,7 @@ export const setupDB = new Command("setup-db") // Define a new command
       case "PostgreSQL":
         if (language === "JavaScript") {
           createProjectFolder(projectName, "prisma");
+          createProjectFolder(projectName, "src/db");
           createPrismaSchema(projectName);
           CreateEnvPrisma(projectName);
           updatePackageWithDatabase(
@@ -84,11 +102,14 @@ export const setupDB = new Command("setup-db") // Define a new command
             "postgresql",
             databasePackagesJs
           );
+          createPrismaClientJs(projectName);
+          createIndexPostgresJs(projectName);
           return;
         }
 
         if (language === "TypeScript") {
           createProjectFolder(projectName, "prisma");
+          createProjectFolder(projectName, "src/db");
           createPrismaSchema(projectName);
           CreateEnvPrisma(projectName);
           updatePackageWithDatabase(
@@ -96,6 +117,8 @@ export const setupDB = new Command("setup-db") // Define a new command
             "postgresql",
             databasePackagesTs
           );
+          createPrismaClientTs(projectName);
+          createIndexPostgresTs(projectName);
           return;
         }
       case "MongoDB":
@@ -107,6 +130,7 @@ export const setupDB = new Command("setup-db") // Define a new command
             databasePackagesJs
           );
           CreateMongooseJs(projectName);
+          createIndexMongooseJs(projectName);
           return;
         }
 
@@ -115,9 +139,12 @@ export const setupDB = new Command("setup-db") // Define a new command
           updatePackageWithDatabase(
             path.join(process.cwd(), projectName),
             "mongodb",
-            databasePackagesJs
+            databasePackagesTs
           );
           CreateMongooseTs(projectName);
+          CreateNodemonJsonTs(projectName);
+          createIndexMongooseTs(projectName);
+
           return;
         }
       default:

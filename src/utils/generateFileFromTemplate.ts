@@ -161,3 +161,178 @@ export async function CreateMongooseJs(projectName: string) {
 
   await generateFromTemplate(templatePath, projectDir);
 }
+
+export async function createPrismaClientTs(projectName: string) {
+  const templatePath = path.join(
+    __dirname,
+    "../templates/prismaClient.ts.template"
+  );
+  const projectDir = path.join(process.cwd(), `${projectName}/src/db`);
+
+  await generateFromTemplate(templatePath, projectDir);
+}
+
+export async function createPrismaClientJs(projectName: string) {
+  const templatePath = path.join(
+    __dirname,
+    "../templates/prismaClient.js.template"
+  );
+  const projectDir = path.join(process.cwd(), `${projectName}/src/db`);
+
+  await generateFromTemplate(templatePath, projectDir);
+}
+
+export async function CreateMongooseUserSchemaTs(projectName: string) {
+  const templatePath = path.join(
+    __dirname,
+    "../templates/jwt/ts/mongodb/User.ts.template"
+  );
+
+  const projectDir = path.join(process.cwd(), `${projectName}/src/models`);
+
+  await generateFromTemplate(templatePath, projectDir);
+}
+
+export async function CreateMongooseAuthMiddlewareTs(
+  projectName: string,
+  jwtSecret: string
+) {
+  const templatePath = path.join(
+    __dirname,
+    "../templates/jwt/ts/mongodb/authMiddleware.ts.template"
+  );
+
+  const replacements = {
+    jwtSecret,
+  };
+
+  const projectDir = path.join(process.cwd(), `${projectName}/src/middleware`);
+
+  await generateFromTemplate(templatePath, projectDir, replacements);
+}
+
+export async function CreateMongooseAuthControllerTs(
+  projectName: string,
+  jwtSecret: string
+) {
+  const templatePath = path.join(
+    __dirname,
+    "../templates/jwt/ts/mongodb/authController.ts.template"
+  );
+
+  const replacements = {
+    jwtSecret,
+  };
+
+  const projectDir = path.join(process.cwd(), `${projectName}/src/controllers`);
+
+  await generateFromTemplate(templatePath, projectDir, replacements);
+}
+
+export async function CreateMongooseAuthRoutesTs(projectName: string) {
+  const templatePath = path.join(
+    __dirname,
+    "../templates/jwt/ts/mongodb/authRoutes.ts.template"
+  );
+
+  const projectDir = path.join(process.cwd(), `${projectName}/src/routes`);
+
+  await generateFromTemplate(templatePath, projectDir);
+}
+
+export async function CreateNodemonJsonTs(projectName: string) {
+  const templatePath = path.join(
+    __dirname,
+    "../templates/jwt/ts/mongodb/nodemon.json.template"
+  );
+
+  const projectDir = path.join(process.cwd(), projectName);
+
+  await generateFromTemplate(templatePath, projectDir);
+}
+
+export async function CreateExpressTypeTs(projectName: string) {
+  const templatePath = path.join(
+    __dirname,
+    "../templates/jwt/ts/mongodb/express.d.ts.template"
+  );
+
+  const projectDir = path.join(process.cwd(), `${projectName}/src/types`);
+
+  await generateFromTemplate(templatePath, projectDir);
+}
+
+export async function createIndexAuthMongooseTs(projectName: string) {
+  const templatePath = path.join(
+    __dirname,
+    "../templates/jwt/ts/mongodb/index.ts.template"
+  );
+  const projectDir = path.join(process.cwd(), `/${projectName}/src`);
+
+  const replacements = {
+    projectName,
+  };
+
+  // No replacements needed for tsconfig
+  await generateFromTemplate(templatePath, projectDir, replacements);
+}
+
+export async function createIndexMongooseTs(projectName: string) {
+  const templatePath = path.join(
+    __dirname,
+    "../templates/ts/mongodb/index.ts.template"
+  );
+  const projectDir = path.join(process.cwd(), `/${projectName}/src`);
+
+  const replacements = {
+    projectName,
+  };
+
+  // No replacements needed for tsconfig
+  await generateFromTemplate(templatePath, projectDir, replacements);
+}
+
+export async function createIndexMongooseJs(projectName: string) {
+  const templatePath = path.join(
+    __dirname,
+    "../templates/js/mongodb/index.js.template"
+  );
+  const projectDir = path.join(process.cwd(), `/${projectName}/src`);
+
+  const replacements = {
+    projectName,
+  };
+
+  // No replacements needed for tsconfig
+  await generateFromTemplate(templatePath, projectDir, replacements);
+}
+
+export async function createIndexPostgresJs(projectName: string) {
+  const templatePath = path.join(
+    __dirname,
+    "../templates/js/postgres/index.js.template"
+  );
+  const projectDir = path.join(process.cwd(), `/${projectName}/src`);
+
+  const replacements = {
+    projectName,
+  };
+
+  // No replacements needed for tsconfig
+  await generateFromTemplate(templatePath, projectDir, replacements);
+}
+
+export async function createIndexPostgresTs(projectName: string) {
+  const templatePath = path.join(
+    __dirname,
+    "../templates/ts/postgres/index.ts.template"
+  );
+  const projectDir = path.join(process.cwd(), `/${projectName}/src`);
+
+  const replacements = {
+    projectName,
+  };
+
+  // No replacements needed for tsconfig
+  await generateFromTemplate(templatePath, projectDir, replacements);
+}

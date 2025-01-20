@@ -1,8 +1,11 @@
 // Server setup
 import express from 'express';
+import connectDB from "./db/mongoose";
 
 const app = express();
 const port = process.env.PORT || 3000;
+
+connectDB()
 
 
 app.get('/', (req, res) => {
