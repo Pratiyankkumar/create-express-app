@@ -41,12 +41,12 @@ We're actively working on adding these features:
 
 ## JWT Based Authentication
 
-| Language + Database     | Authentication Status | Implementation Details    |
-| ----------------------- | --------------------- | ------------------------- |
-| TypeScript + MongoDB    | ✅ Implemented        | JWT-based authentication  |
-| TypeScript + PostgreSQL | ✅ Implemented        | Using Prisma JWT Based    |
-| JavaScript + MongoDB    | ❌ Planned            | For future implementation |
-| JavaScript + PostgreSQL | ❌ Planned            | Using Prisma              |
+| Language + Database     | Authentication Status | Implementation Details   |
+| ----------------------- | --------------------- | ------------------------ |
+| TypeScript + MongoDB    | ✅ Implemented        | JWT-based authentication |
+| TypeScript + PostgreSQL | ✅ Implemented        | Using Prisma JWT Based   |
+| JavaScript + MongoDB    | ✅ Implemented        | JWT-based authentication |
+| JavaScript + PostgreSQL | ❌ Planned            | Using Prisma             |
 
 ## Configuration
 
