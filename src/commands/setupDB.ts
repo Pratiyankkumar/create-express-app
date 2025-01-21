@@ -77,8 +77,14 @@ const databasePackagesJs: Record<DatabaseType, DatabaseDependencies> = {
     dependencies: {
       mongoose: "^8.0.3", // MongoDB ODM
       mongodb: "^6.3.0", // MongoDB driver
+      bcryptjs: "^2.4.3",
+      jsonwebtoken: "^9.0.2",
+      dotenv: "^16.3.1",
+      cors: "^2.8.5",
     },
-    devDependencies: {}, // No dev dependencies required for JavaScript
+    devDependencies: {
+      nodemon: "^3.0.2",
+    }, // No dev dependencies required for JavaScript
   },
 };
 

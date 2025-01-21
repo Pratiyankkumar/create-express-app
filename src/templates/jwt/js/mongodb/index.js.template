@@ -1,0 +1,44 @@
+require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+const connectDB = require('./db/mongoose');
+const authRoutes = require('./routes/authRoutes');
+
+const app = express();
+const port = process.env.PORT || 3000;
+
+// Connect to MongoDB
+connectDB();
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+
+// Routes
+app.use('/auth', authRoutes);
+
+// Home route
+app.get("/", (req, res) => {
+  res.json({
+    message: "Welcome to {{projectName}}",
+    endpoints: {
+      signup: "/api/auth/register",
+      login: "/api/auth/login",
+      profile: "/auth/profile"
+    },
+  });
+});
+
+// Basic error handler
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: 'Something went wrong!' });
+});
+
+app.listen(port, () => {
+  console.log(`✨ Server is running on http://localhost:${port}`);
+  console.log("📍 Available endpoints:");
+  console.log("   POST /auth/register - Create a new account");
+  console.log("   POST /auth/login  - Login to existing account");
+  console.log("   POST /auth/profile  - Login to existing account");
+});

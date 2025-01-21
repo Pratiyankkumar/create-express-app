@@ -10,6 +10,7 @@ import {
   CreateMongooseAuthMiddlewareTs,
   CreateMongooseAuthRoutesTs,
   CreateMongooseUserSchemaTs,
+  generateAuthFilesMongoJS,
   generateAuthFilesPostgresqlTS,
 } from "../utils/generateFileFromTemplate";
 import { language } from "./setUpLanguage";
@@ -97,9 +98,32 @@ export const setupAuth = new Command("setup-auth") // Define a new command
         }
 
         if (language === "JavaScript" && DB === "MongoDB") {
-          return console.log(
-            "The authentication feature is in development for Mongodb + JS, will be available soon"
+          createProjectFolder(projectName, "src/models");
+          createProjectFolder(projectName, "src/middleware");
+          createProjectFolder(projectName, "src/controllers");
+          createProjectFolder(projectName, "src/routes");
+
+          generateAuthFilesMongoJS(projectName, "index.js", "src", "");
+          generateAuthFilesMongoJS(projectName, "User.js", "src/models", "");
+          generateAuthFilesMongoJS(
+            projectName,
+            "authRoutes.js",
+            "src/routes",
+            ""
           );
+          generateAuthFilesMongoJS(
+            projectName,
+            "authMiddleware.js",
+            "src/middleware",
+            jwtSecret
+          );
+          generateAuthFilesMongoJS(
+            projectName,
+            "authController.js",
+            "src/controllers",
+            jwtSecret
+          );
+          return;
         }
 
         if (language === "JavaScript" && DB === "PostgreSQL") {
