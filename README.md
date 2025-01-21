@@ -5,6 +5,7 @@
 ## Features
 
 - **Language Options**
+
   - JavaScript (ES6+)
   - TypeScript with full type support
 
@@ -20,7 +21,8 @@ npm install -g @pratiyank/create-express-app
 
 ## Quick Start
 
-Directly copy and paste below command please for now 
+Directly copy and paste below command please for now
+
 ```bash
 create-express-app init
 ```
@@ -28,6 +30,7 @@ create-express-app init
 ## Features in Development
 
 We're actively working on adding these features:
+
 - Authentication boilerplate
 - Error handling utilities
 - Middleware configurations
@@ -38,12 +41,12 @@ We're actively working on adding these features:
 
 ## JWT Based Authentication
 
-| Language + Database | Authentication Status | Implementation Details |
-|--------------------|----------------------|----------------------|
-| TypeScript + MongoDB | ✅ Implemented | JWT-based authentication |
-| TypeScript + PostgreSQL | ❌ Planned | Using Prisma |
-| JavaScript + MongoDB | ❌ Planned | For future implementation |
-| JavaScript + PostgreSQL | ❌ Planned | Using Prisma |
+| Language + Database     | Authentication Status | Implementation Details    |
+| ----------------------- | --------------------- | ------------------------- |
+| TypeScript + MongoDB    | ✅ Implemented        | JWT-based authentication  |
+| TypeScript + PostgreSQL | ✅ Implemented        | Using Prisma JWT Based    |
+| JavaScript + MongoDB    | ❌ Planned            | For future implementation |
+| JavaScript + PostgreSQL | ❌ Planned            | Using Prisma              |
 
 ## Configuration
 

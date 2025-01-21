@@ -35,11 +35,16 @@ const databasePackagesTs: Record<DatabaseType, DatabaseDependencies> = {
   postgresql: {
     dependencies: {
       pg: "^8.11.3",
-      "@prisma/client": "^6.1.0",
+      "@prisma/client": "^5.9.0",
+      bcryptjs: "^2.4.3",
+      jsonwebtoken: "^9.0.2",
+      dotenv: "^16.3.1",
     },
     devDependencies: {
       prisma: "^6.1.0",
       "@types/pg": "^8.10.9",
+      "@types/bcryptjs": "^2.4.6",
+      "@types/jsonwebtoken": "^9.0.5",
     },
   },
   mongodb: {

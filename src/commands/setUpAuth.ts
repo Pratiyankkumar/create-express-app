@@ -10,6 +10,7 @@ import {
   CreateMongooseAuthMiddlewareTs,
   CreateMongooseAuthRoutesTs,
   CreateMongooseUserSchemaTs,
+  generateAuthFilesPostgresqlTS,
 } from "../utils/generateFileFromTemplate";
 import { language } from "./setUpLanguage";
 import { DB } from "./setupDB";
@@ -55,9 +56,43 @@ export const setupAuth = new Command("setup-auth") // Define a new command
           return;
         }
         if (language === "TypeScript" && DB === "PostgreSQL") {
-          console.log(
-            "The authentication feature is in development for postgresql + TS, will be available soon"
+          createProjectFolder(projectName, "src/middleware");
+          createProjectFolder(projectName, "src/controllers");
+          createProjectFolder(projectName, "src/routes");
+          createProjectFolder(projectName, "src/types");
+          generateAuthFilesPostgresqlTS(projectName, "index.ts", "src", "");
+          generateAuthFilesPostgresqlTS(
+            projectName,
+            "schema.prisma",
+            "prisma",
+            ""
           );
+          generateAuthFilesPostgresqlTS(
+            projectName,
+            "authController.ts",
+            "src/controllers",
+            jwtSecret
+          );
+          generateAuthFilesPostgresqlTS(
+            projectName,
+            "authMiddleware.ts",
+            "src/middleware",
+            jwtSecret
+          );
+          generateAuthFilesPostgresqlTS(
+            projectName,
+            "authRoutes.ts",
+            "src/routes",
+            ""
+          );
+          generateAuthFilesPostgresqlTS(
+            projectName,
+            "express.d.ts",
+            "src/types",
+            ""
+          );
+          generateAuthFilesPostgresqlTS(projectName, "nodemon.json", "", "");
+
           return;
         }
 
@@ -72,23 +107,6 @@ export const setupAuth = new Command("setup-auth") // Define a new command
             "The authentication feature is in development for postgresql + JS, will be available soon"
           );
         }
-      case "OAuth 2.0 (e.g., Google, GitHub)":
-        console.log(
-          "ℹ️ You chose OAuth 2.0. You can ask for provider details here."
-        );
-        break;
-      case "Session-based Authentication":
-        console.log("ℹ️ You chose session-based authentication.");
-        break;
-      case "API Key Authentication":
-        console.log("ℹ️ You chose API key authentication.");
-        break;
-      case "Custom Token-based Authentication":
-        console.log("ℹ️ You chose custom token-based authentication.");
-        break;
-      case "None (Skip authentication)":
-        console.log("ℹ️ You chose to skip authentication.");
-        break;
       default:
         console.log("⚠️ Invalid option selected.");
         break;

@@ -1,0 +1,35 @@
+import express from "express";
+import authRoutes from "./routes/authRoutes";
+import { authMiddleware } from "./middleware/authMiddleware";
+
+const app = express();
+const port = process.env.PORT || 3000;
+
+app.use(express.json());
+
+app.get("/", (req, res) => {
+  res.json({
+    message: "Welcome to {{projectName}}",
+    endpoints: {
+      signup: "/auth/register",
+      login: "/auth/login",
+      protectedRoute: "/protected",
+    },
+  });
+});
+
+app.use("/auth", authRoutes);
+
+app.get("/protected", authMiddleware, async (req, res) => {
+  res.send({
+    user: req.user,
+    message: "This route is protected by middleware",
+  });
+});
+
+app.listen(port, () => {
+  console.log(`✨ Server is running on http://localhost:${port}`);
+  console.log("📍 Available endpoints:");
+  console.log("   POST /auth/register - Create a new account");
+  console.log("   POST /auth/login  - Login to existing account");
+});

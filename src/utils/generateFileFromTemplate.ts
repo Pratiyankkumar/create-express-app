@@ -336,3 +336,24 @@ export async function createIndexPostgresTs(projectName: string) {
   // No replacements needed for tsconfig
   await generateFromTemplate(templatePath, projectDir, replacements);
 }
+
+export async function generateAuthFilesPostgresqlTS(
+  projectName: string,
+  fileName: string,
+  dir: string,
+  jwtSecret?: string
+) {
+  const templatePath = path.join(
+    __dirname,
+    `../templates/jwt/ts/postgres/${fileName}.template`
+  );
+
+  const projectDir = path.join(process.cwd(), `/${projectName}/${dir}`);
+
+  const replacements = {
+    projectName,
+    jwtSecret: jwtSecret ?? "",
+  };
+
+  await generateFromTemplate(templatePath, projectDir, replacements);
+}
