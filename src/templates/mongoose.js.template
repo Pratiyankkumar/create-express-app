@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 function connectDB() {
   mongoose
-    .connect("mongodb://localhost:27017/{{projectName}}")
+    .connect("MONGO_DB_CONNECTION_STRING")
     .then(() => {
       console.log("✅ Connected to MongoDB successfully");
     })

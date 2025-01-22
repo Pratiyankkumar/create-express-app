@@ -1,5 +1,5 @@
 import { Command } from "commander";
-import askAuthentication from "../prompts/Authentication"; // Import the askAuthentication function
+import askAuthentication from "../prompts/Authentication";
 import inquirer from "inquirer";
 import { createProjectFolder } from "../utils/folderUtils";
 import { projectName } from "./setUpProject";
@@ -11,20 +11,49 @@ import {
   CreateMongooseAuthRoutesTs,
   CreateMongooseUserSchemaTs,
   generateAuthFilesMongoJS,
+  generateAuthFilesPostgreJS,
   generateAuthFilesPostgresqlTS,
 } from "../utils/generateFileFromTemplate";
 import { language } from "./setUpLanguage";
 import { DB } from "./setupDB";
 
-export const setupAuth = new Command("setup-auth") // Define a new command
-  .description("Set up authentication for your project") // Add a description
+const printNextSteps = (db: string, lang: string) => {
+  console.log("\n📋 Next steps:");
+  console.log("1. Install dependencies:");
+  console.log("   npm install");
+
+  if (db === "MongoDB") {
+    console.log("\n2. Set up MongoDB connection:");
+    console.log("   - Paste you mongodb connection string in src/db/mongoose");
+    console.log(
+      "\n   Your connection will be configured in src/db/mongoose.js"
+    );
+  }
+
+  if (db === "PostgreSQL") {
+    console.log("\n2. Set up PostgreSQL connection:");
+    console.log(
+      "   - .env file is created in your project root your project root"
+    );
+    console.log("   - Add your PostgreSQL connection string there :");
+    console.log(
+      "     DATABASE_URL=postgresql://user:password@localhost:5432/dbname"
+    );
+    console.log("\n3. Initialize Prisma and create database tables:");
+    console.log("   npx prisma generate");
+    console.log("   npx prisma migrate dev --name init");
+  }
+
+  console.log("\n4. Start the server:");
+  console.log(`   ${lang === "TypeScript" ? "npm run dev" : "npm run dev"}`);
+};
+
+export const setupAuth = new Command("setup-auth")
+  .description("Set up authentication for your project")
   .action(async () => {
     console.log("🔧 Setting up authentication for your project...\n");
 
-    // Use askAuthentication to prompt the user
     const authMethod = await askAuthentication();
-
-    // Process the selected authentication method
     console.log(`✅ You selected: ${authMethod}\n`);
 
     switch (authMethod) {
@@ -35,7 +64,7 @@ export const setupAuth = new Command("setup-auth") // Define a new command
           {
             type: "input",
             name: "secretKey",
-            message: "ENter JWT secret Key",
+            message: "Enter JWT secret Key",
             default: "your-secret-key",
           },
         ]);
@@ -54,6 +83,7 @@ export const setupAuth = new Command("setup-auth") // Define a new command
           CreateMongooseAuthMiddlewareTs(projectName, jwtSecret);
           CreateMongooseAuthRoutesTs(projectName);
           CreateExpressTypeTs(projectName);
+          printNextSteps("MongoDB", "TypeScript");
           return;
         }
         if (language === "TypeScript" && DB === "PostgreSQL") {
@@ -93,7 +123,7 @@ export const setupAuth = new Command("setup-auth") // Define a new command
             ""
           );
           generateAuthFilesPostgresqlTS(projectName, "nodemon.json", "", "");
-
+          printNextSteps("PostgreSQL", "TypeScript");
           return;
         }
 
@@ -102,7 +132,6 @@ export const setupAuth = new Command("setup-auth") // Define a new command
           createProjectFolder(projectName, "src/middleware");
           createProjectFolder(projectName, "src/controllers");
           createProjectFolder(projectName, "src/routes");
-
           generateAuthFilesMongoJS(projectName, "index.js", "src", "");
           generateAuthFilesMongoJS(projectName, "User.js", "src/models", "");
           generateAuthFilesMongoJS(
@@ -123,13 +152,43 @@ export const setupAuth = new Command("setup-auth") // Define a new command
             "src/controllers",
             jwtSecret
           );
+          printNextSteps("MongoDB", "JavaScript");
           return;
         }
 
         if (language === "JavaScript" && DB === "PostgreSQL") {
-          return console.log(
-            "The authentication feature is in development for postgresql + JS, will be available soon"
+          createProjectFolder(projectName, "prisma");
+          createProjectFolder(projectName, "src/models");
+          createProjectFolder(projectName, "src/middleware");
+          createProjectFolder(projectName, "src/controllers");
+          createProjectFolder(projectName, "src/routes");
+          generateAuthFilesPostgreJS(projectName, "index.js", "src", "");
+          generateAuthFilesPostgreJS(
+            projectName,
+            "authRoutes.js",
+            "src/routes",
+            ""
           );
+          generateAuthFilesPostgreJS(
+            projectName,
+            "authController.js",
+            "src/controllers",
+            jwtSecret
+          );
+          generateAuthFilesPostgreJS(
+            projectName,
+            "authMiddleware.js",
+            "src/middleware",
+            jwtSecret
+          );
+          generateAuthFilesPostgreJS(
+            projectName,
+            "schema.prisma",
+            "prisma",
+            ""
+          );
+          printNextSteps("PostgreSQL", "JavaScript");
+          return;
         }
       default:
         console.log("⚠️ Invalid option selected.");

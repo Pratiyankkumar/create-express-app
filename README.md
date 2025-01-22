@@ -46,7 +46,7 @@ We're actively working on adding these features:
 | TypeScript + MongoDB    | ✅ Implemented        | JWT-based authentication |
 | TypeScript + PostgreSQL | ✅ Implemented        | Using Prisma JWT Based   |
 | JavaScript + MongoDB    | ✅ Implemented        | JWT-based authentication |
-| JavaScript + PostgreSQL | ❌ Planned            | Using Prisma             |
+| JavaScript + PostgreSQL | ✅ Implemented        | Using Prisma JWT Based   |
 
 ## Configuration
 

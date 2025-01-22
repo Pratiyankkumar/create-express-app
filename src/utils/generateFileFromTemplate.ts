@@ -378,3 +378,24 @@ export async function generateAuthFilesMongoJS(
 
   await generateFromTemplate(templatePath, projectDir, replacements);
 }
+
+export async function generateAuthFilesPostgreJS(
+  projectName: string,
+  fileName: string,
+  dir: string,
+  jwtSecret?: string
+) {
+  const templatePath = path.join(
+    __dirname,
+    `../templates/jwt/js/postgres/${fileName}.template`
+  );
+
+  const projectDir = path.join(process.cwd(), `/${projectName}/${dir}`);
+
+  const replacements = {
+    projectName,
+    jwtSecret: jwtSecret ?? "",
+  };
+
+  await generateFromTemplate(templatePath, projectDir, replacements);
+}

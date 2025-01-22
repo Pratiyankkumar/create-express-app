@@ -40,5 +40,5 @@ app.listen(port, () => {
   console.log("📍 Available endpoints:");
   console.log("   POST /auth/register - Create a new account");
   console.log("   POST /auth/login  - Login to existing account");
-  console.log("   POST /auth/profile  - Login to existing account");
+  console.log("   POST /auth/profile  - Get you profile");
 });
