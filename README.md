@@ -21,7 +21,7 @@ npm install -g @pratiyank/create-express-app
 
 ## Quick Start
 
-Directly copy and paste below command please for now
+Directly copy and paste:
 
 ```bash
 create-express-app init

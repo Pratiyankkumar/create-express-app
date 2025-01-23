@@ -46,6 +46,9 @@ const printNextSteps = (db: string, lang: string) => {
 
   console.log("\n4. Start the server:");
   console.log(`   ${lang === "TypeScript" ? "npm run dev" : "npm run dev"}`);
+  console.log(
+    "\n   Please if you find this usefull please consider giving it a star ⭐ on github : https://github.com/Pratiyankkumar/create-express-app"
+  );
 };
 
 export const setupAuth = new Command("setup-auth")
@@ -190,6 +193,9 @@ export const setupAuth = new Command("setup-auth")
           printNextSteps("PostgreSQL", "JavaScript");
           return;
         }
+      case "None (Skip authentication)":
+        return;
+
       default:
         console.log("⚠️ Invalid option selected.");
         break;
